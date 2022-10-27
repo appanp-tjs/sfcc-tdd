@@ -1,0 +1,26 @@
+function get(name, containsSiteLevelTests) {
+	var siteLevelTestsHelpers = require('*/cartridge/scripts/helpers/siteLevelTestsHelpers.js');
+	var testSuite = require('*/cartridge/scripts/testsuites.json').filter(function(suite) {
+		return suite.name == name;
+	})[0];
+
+	if (!testSuite && containsSiteLevelTests === 'true') {
+		// Check the Site Level Tests
+		var siteFileName = siteLevelTestsHelpers.getSiteLevelFile();
+		testSuite = require('*/cartridge/scripts/' + siteFileName).filter(function(suite) {
+			return suite.name == name;
+		})[0];
+	}
+	return require(testSuite.modulePath);
+}
+
+function getModulePath(name) {
+	var testSuite = require('*/cartridge/scripts/testsuites.json').filter(function(suite) {
+		return suite.name == name;
+	})[0];
+
+	return testSuite.modulePath;
+}
+
+module.exports.get = get;
+module.exports.getModulePath = getModulePath;

@@ -1,0 +1,2 @@
+<h1>Service iframe</h1>
+<iframe name="service-iframe" id="service-iframe" width="95%" height="100%" src="${URLUtils.url('Home-Show')}" />
